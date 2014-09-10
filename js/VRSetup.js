@@ -54,7 +54,7 @@ function VRSetup(p_renderer, p_scene){
     this.zNear = 0.1;
     this.zFar = 1000;
     this.cameraGlobalPosition = new THREE.Vector3(0, 0, 0);
-	this.VR_POSITION_SCALE = 25; //25
+	this.VR_POSITION_SCALE = 1; //25
 
 	this.cameraLeft = new THREE.PerspectiveCamera( 75, 4/3, this.zNear, this.zFar );
 	this.cameraRight = new THREE.PerspectiveCamera( 75, 4/3, this.zNear, this.zFar );
@@ -104,7 +104,7 @@ function VRSetup(p_renderer, p_scene){
  *******************************************************************************************/
 VRSetup.prototype.RequestFullScreenVR = function(){
 	this.vrMode = true;
-	this.renderer.setSize( window.innerWidth, window.innerHeight );
+	
     if (this.renderer.domElement.webkitRequestFullscreen) {
     	this.renderer.domElement.webkitRequestFullscreen({ vrDisplay: this.hmdDevice });
     	document.addEventListener("webkitfullscreenchange", this.onFullscreenChange.bind(this), false);
@@ -123,6 +123,8 @@ VRSetup.prototype.onFullscreenChange = function(){
 		this.renderer.setSize(this.oldRendererWidth, this.oldRendererHeight);
 		document.removeEventListener("webkitfullscreenchange", this.onFullscreenChange, false);
 		document.removeEventListener("mozfullscreenchange", this.onFullscreenChange, false);
+	} else {
+		this.renderer.setSize( window.innerWidth, window.innerHeight );
 	}
 };
 

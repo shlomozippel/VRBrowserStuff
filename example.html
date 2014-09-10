@@ -39,11 +39,12 @@
 			this.renderer = new THREE.WebGLRenderer({antialias:true});
 			g_renderer = this.renderer;
 			this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+			this.renderer.setClearColor( 0xffffff );
 			this.containerEle.appendChild( g_renderer.domElement );
 
-			/************************************
-			* Render a cube and a light
-			*************************************/
+
+			/*
+
 			// LIGHT
 			var light = new THREE.AmbientLight( 0x404040 );
 			g_scene.add( light );
@@ -52,6 +53,28 @@
 			cute_cube = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshLambertMaterial( {color: 0x8888ff} ));
 			cute_cube.position.set(0, 0,-18);
 			g_scene.add( cute_cube );
+
+			*/
+
+			 var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+  var material = new THREE.MeshNormalMaterial( { overdraw: 0.5 } );
+
+  group = new THREE.Object3D();
+
+  for (var i = 0; i < 200; i ++) {
+    var mesh = new THREE.Mesh( geometry, material );
+    mesh.position.x = Math.random() * 2000 - 1000;
+    mesh.position.y = Math.random() * 2000 - 1000;
+    mesh.position.z = Math.random() * 2000 - 1000;
+    mesh.rotation.x = Math.random() * 2 * Math.PI;
+    mesh.rotation.y = Math.random() * 2 * Math.PI;
+    mesh.matrixAutoUpdate = false;
+    mesh.updateMatrix();
+    group.add(mesh);
+  }
+
+  g_scene.add(group);
+
 
 			/************************************
 			* Initialize the VRSetup object
@@ -75,8 +98,8 @@
 		function animate(){
 			requestAnimationFrame( animate );
 
-			cute_cube.rotation.x += 0.01;
-			cute_cube.rotation.y += 0.02;
+			/*cute_cube.rotation.x += 0.01;
+			cute_cube.rotation.y += 0.02;*/
 
 			g_vr.render();
 			
