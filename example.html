@@ -1,0 +1,104 @@
+<html>
+<head>
+	<title>Threejs VRSetup.js Example</title>
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/three.js"></script>
+	<script src="js/VRSetup.js"></script>
+
+	<style>
+	body
+	{
+		font-family: Monospace;
+		font-weight: bold;
+		background-color: #ccccff;
+		margin: 0px;
+		overflow: hidden;
+	}
+	</style>
+
+
+	<script>
+		//Global references
+		var g_scene, g_renderer;
+		//Handle to the VRSetup object
+		var g_vr;
+		$( document ).ready( function(){
+			/*************************************
+			* Boilerplate THREEJS scene setup
+			**************************************/
+			this.containerEle = $(".threejs-container").get(0);
+
+			// SCENE
+			this.scene = new THREE.Scene();
+			g_scene = this.scene;
+			this.SCREEN_WIDTH = window.innerWidth;
+			this.SCREEN_HEIGHT = window.innerHeight;
+
+			//RENDERER
+			this.renderer = new THREE.WebGLRenderer({antialias:true});
+			g_renderer = this.renderer;
+			this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+			this.containerEle.appendChild( g_renderer.domElement );
+
+			/************************************
+			* Render a cube and a light
+			*************************************/
+			// LIGHT
+			var light = new THREE.AmbientLight( 0x404040 );
+			g_scene.add( light );
+
+			// CUBE: cute, not ugly
+			cute_cube = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshLambertMaterial( {color: 0x8888ff} ));
+			cute_cube.position.set(0, 0,-18);
+			g_scene.add( cute_cube );
+
+			/************************************
+			* Initialize the VRSetup object
+			*************************************/
+			g_vr = new VRSetup(g_renderer, g_scene);
+
+			/************************************
+			* Enable the VR
+			*************************************/
+			$("#start-button").click(function() {
+				g_vr.RequestFullScreenVR();
+			});
+
+			/************************************
+			* Kick off the animation loop!
+			*************************************/
+			animate();
+
+		});
+
+		function animate(){
+			requestAnimationFrame( animate );
+
+			cute_cube.rotation.x += 0.01;
+			cute_cube.rotation.y += 0.02;
+
+			g_vr.render();
+			
+		}
+
+		window.addEventListener("keydown", function(ev) {
+          if (ev.keyCode == "R".charCodeAt(0))  {
+            g_vr.reset();
+          }
+          /*
+          if (ev.keyCode == 187 || ev.keyCode == 61)  { // "+" key
+            resizeFOV(0.1);
+          }
+          if (ev.keyCode == 189 || ev.keyCode == 173)  { // "-" key
+            resizeFOV(-0.1);
+          }*/
+      });
+	</script>
+
+</head>
+<body>
+	<button id="start-button" >Start VR</button>
+	<div class="threejs-container"></div>
+</body>
+</html>
