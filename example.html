@@ -86,13 +86,13 @@
           if (ev.keyCode == "R".charCodeAt(0))  {
             g_vr.reset();
           }
-          /*
-          if (ev.keyCode == 187 || ev.keyCode == 61)  { // "+" key
-            resizeFOV(0.1);
+
+          if (ev.keyCode == 187 || ev.keyCode == 61 || ev.keyCode == 107)  { // "+" key
+            g_vr.resizeFOV(0.1);
           }
-          if (ev.keyCode == 189 || ev.keyCode == 173)  { // "-" key
-            resizeFOV(-0.1);
-          }*/
+          if (ev.keyCode == 189 || ev.keyCode == 173 || ev.keyCode == 109)  { // "-" key
+           	g_vr.resizeFOV(-0.1);
+          }
       });
 	</script>
 

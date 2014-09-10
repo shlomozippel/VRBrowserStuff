@@ -52,7 +52,7 @@ function VRSetup(p_renderer, p_scene){
 
     // Camera setup
     this.zNear = 0.1;
-    this.zFar = 5000;
+    this.zFar = 1000;
     this.cameraGlobalPosition = new THREE.Vector3(0, 0, 0);
 	this.VR_POSITION_SCALE = 25; //25
 
@@ -60,8 +60,7 @@ function VRSetup(p_renderer, p_scene){
 	this.cameraRight = new THREE.PerspectiveCamera( 75, 4/3, this.zNear, this.zFar );
 
 	// non VR camera
-	this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-	this.camera.z
+	this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, this.zNear, this.zFar);
 
 	//Holders to save the original renderer size for when we exit rift mode. But...why would we ever want to do that?
 	this.oldRendererWidth = this.renderer.domElement.width;
